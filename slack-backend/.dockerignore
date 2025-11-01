@@ -1,0 +1,46 @@
+# Dependency directories
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Development files
+.git/
+.gitignore
+.vscode/
+.idea/
+
+# Test files
+coverage/
+*.test.js
+*.spec.js
+
+# Documentation
+README.md
+*.md
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+dist/
+build/
+
+# Package lock files (include only package-lock.json)
+yarn.lock
+
+# Prettier and linting
+.prettierrc
+.eslintrc*
+eslint.config.js
+
+# Docker files
+Dockerfile
+docker-compose.yml
+.dockerignore

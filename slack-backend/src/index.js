@@ -4,6 +4,11 @@ const app = express()
 
 
 import { PORT } from './config/serverConfig.js'
+import { connectDB } from './config/dbConfig.js'
+
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+
 
 
 app.get('/', (req, res) => {
@@ -12,4 +17,5 @@ app.get('/', (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`)
+  connectDB()
 })

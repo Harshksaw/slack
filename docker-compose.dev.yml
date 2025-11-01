@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  # MongoDB Database
+  mongodb:
+    image: mongo:7.0
+    container_name: slack-mongodb-dev
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: slackDB
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - slack-network
+
+  # Backend Service (Development)
+  backend:
+    build:
+      context: ./slack-backend
+      dockerfile: Dockerfile.dev
+    container_name: slack-backend-dev
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+      MONGO_URI: mongodb://mongodb:27017/slackDB
+    depends_on:
+      - mongodb
+    networks:
+      - slack-network
+    volumes:
+      # Mount source for hot-reload during development
+      - ./slack-backend/src:/app/src
+      - ./slack-backend/package.json:/app/package.json
+      # Prevent node_modules from being overwritten
+      - /app/node_modules
+
+networks:
+  slack-network:
+    driver: bridge
+
+volumes:
+  mongodb_data:
+    driver: local
