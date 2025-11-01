@@ -1,0 +1,4 @@
+# Utils
+Utility functions and helpers used across the application.
+
+Example: logger.js, responseHandler.js, errorCodes.js, validators.js

@@ -1,0 +1,4 @@
+# Producers
+Queue producers that add jobs to message queues.
+
+Example: emailProducer.js, notificationProducer.js

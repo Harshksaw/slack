@@ -1,15 +1,15 @@
-import mongose from "mongoose";
-import { NODE_ENV } from "./serverConfig";
+import mongoose from "mongoose";
+import { NODE_ENV } from "./serverConfig.js";
 
 
 
-export const connectDB = async () => {
+export const connectDB = async (mongoURI) => {
   try {
     if(NODE_ENV !== 'production') {
-        await mongose.connect('http://localhost:27017/slackDB');
+        await mongoose.connect('mongodb://localhost:27017/slackDB');
     }
     else if(NODE_ENV === 'production') {
-        await mongose.connect(mongoURI);
+        await mongoose.connect(mongoURI);
 
     }
     console.log("MongoDB connected successfully");

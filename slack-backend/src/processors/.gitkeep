@@ -1,0 +1,4 @@
+# Processors
+Background job processors that handle tasks from queues.
+
+Example: emailProcessor.js, notificationProcessor.js, imageProcessor.js

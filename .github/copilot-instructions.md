@@ -9,26 +9,32 @@ Follow these rules and examples when making changes.
 - This repository contains a small Express-based backend under `slack-backend/`.
 - Entry point: `slack-backend/src/index.js` (ESM-style imports; package.json uses "type": "module").
 - Configuration: environment variables are loaded from `.env` via `src/config/serverConfig.js` (uses `dotenv`).
+- Database: MongoDB with Mongoose ODM; connection config in `src/config/dbConfig.js`.
 
 ## Important files
 
-- `slack-backend/package.json` — contains scripts and dependencies. Note: it currently has a JSON syntax issue in the `scripts` section (missing comma); be careful when editing.
+- `slack-backend/package.json` — contains scripts and dependencies including Express, Mongoose, dotenv, and nodemon.
 - `slack-backend/src/index.js` — starts an Express server and reads `PORT` from `src/config/serverConfig.js`.
-- `slack-backend/src/config/serverConfig.js` — calls `dotenv.config()` and exports `PORT` defaulting to `3000`.
+- `slack-backend/src/config/serverConfig.js` — calls `dotenv.config()` and exports `PORT`, `NODE_ENV`, and `MONGO_URI`.
+- `slack-backend/src/config/dbConfig.js` — MongoDB connection logic using Mongoose; connects to localhost in dev, uses MONGO_URI in production.
+- `docker-compose.yml` — production setup with backend and MongoDB services.
+- `docker-compose.dev.yml` — development setup with hot-reload and volume mounts.
+- `DOCKER.md` — comprehensive Docker usage guide.
 
 ## Project-specific conventions & gotchas
 
 - ESM modules only: the backend uses native ESM imports ("type": "module"). Use `import`/`export` and avoid CommonJS `require`.
 - Small single-service layout: all runtime code lives under `slack-backend/src/` and config under `src/config/`.
 - dotenv is used for runtime configuration. Expect `.env` at the `slack-backend/` level (not committed here). When adding new config values, add them to `serverConfig.js` or a new config module under `src/config/`.
-- Scripts: the `dev` script uses `nodemon index.js`. Run from `slack-backend` directory (see example below).
-- Dependencies: `nodemon` is declared in `dependencies` rather than `devDependencies` — tolerate either when editing package.json unless explicitly asked to change dependency categories.
+- Scripts: the `dev` script uses `nodemon src/index.js`. Run from `slack-backend` directory (see example below).
+- MongoDB connection: in development, connects to `mongodb://localhost:27017/slackDB`; in production uses `MONGO_URI` env var.
+- Import paths: always include `.js` extension when importing local modules (ESM requirement).
 
 ## Build / run / debug (what works now)
 
 Examples an agent can use or suggest:
 
-1) Install and run development server
+1) Install and run development server (local)
 
    cd slack-backend
    npm install
@@ -39,7 +45,17 @@ Examples an agent can use or suggest:
    cd slack-backend
    node ./src/index.js
 
-Note: Because package.json is malformed (missing comma in `scripts`) edits that touch `package.json` should either fix the syntax first or be applied together with the syntax fix.
+3) Run with Docker (production)
+
+   docker-compose up -d
+   docker-compose logs -f backend
+
+4) Run with Docker (development with hot-reload)
+
+   docker-compose -f docker-compose.dev.yml up -d
+   docker-compose -f docker-compose.dev.yml logs -f backend
+
+Note: MongoDB must be running (locally or via Docker) for the app to start successfully. See `DOCKER.md` for comprehensive Docker usage.
 
 ## Editing patterns and PR guidance for agents
 

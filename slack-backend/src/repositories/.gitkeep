@@ -1,0 +1,4 @@
+# Repositories
+Data access layer - encapsulates database operations and queries.
+
+Example: userRepository.js, workspaceRepository.js, channelRepository.js

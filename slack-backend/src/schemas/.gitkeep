@@ -1,0 +1,4 @@
+# Schemas
+Mongoose schemas and models for MongoDB collections.
+
+Example: userSchema.js, workspaceSchema.js, channelSchema.js, messageSchema.js

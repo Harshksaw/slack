@@ -1,0 +1,4 @@
+# Middlewares
+Express middlewares for authentication, validation, error handling, logging, etc.
+
+Example: authMiddleware.js, errorHandler.js, validateRequest.js

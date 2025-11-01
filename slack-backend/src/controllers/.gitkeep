@@ -1,0 +1,4 @@
+# Controllers
+Handle HTTP request/response logic. Controllers receive requests, validate input, call services, and return responses.
+
+Example: userController.js, workspaceController.js, channelController.js
