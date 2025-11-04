@@ -1,4 +1,0 @@
-# Services
-Business logic layer - orchestrates repositories, external APIs, and implements core functionality.
-
-Example: userService.js, workspaceService.js, channelService.js, authService.js

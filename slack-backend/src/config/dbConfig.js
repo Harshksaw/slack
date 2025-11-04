@@ -1,20 +1,16 @@
-import mongoose from "mongoose";
-import { NODE_ENV } from "./serverConfig.js";
+import mongoose from 'mongoose';
 
+import { DEV_DB_URL, NODE_ENV, PROD_DB_URL } from './serverConfig.js';
 
-
-export const connectDB = async (mongoURI) => {
+export default async function connectDB() {
   try {
-    if(NODE_ENV !== 'production') {
-        await mongoose.connect('mongodb://localhost:27017/slackDB');
+    if (NODE_ENV === 'development') {
+      await mongoose.connect(DEV_DB_URL);
+    } else if (NODE_ENV === 'production') {
+      await mongoose.connect(PROD_DB_URL);
     }
-    else if(NODE_ENV === 'production') {
-        await mongoose.connect(mongoURI);
-
-    }
-    console.log("MongoDB connected successfully");
+    console.log(`Connected to mongodb database from ${NODE_ENV} environment`);
   } catch (error) {
-    console.error("MongoDB connection error:", error);
-    process.exit(1);
+    console.log('Error connecting to database', error);
   }
 }

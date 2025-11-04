@@ -1,4 +1,0 @@
-# Queues
-Queue configuration and setup (Bull, BullMQ, etc.)
-
-Example: emailQueue.js, notificationQueue.js
